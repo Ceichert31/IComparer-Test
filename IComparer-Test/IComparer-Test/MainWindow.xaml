@@ -1,0 +1,76 @@
+﻿<Window x:Class="IComparer_Test.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IComparer_Test"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+
+        <CollectionViewSource x:Key="CollectionVS"
+                              Source="{Binding Files}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Size" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
+        <DataTemplate x:Key="sizeTemplate">
+            <TextBlock Text="{Binding Path=Size}" />
+        </DataTemplate>
+
+        <HierarchicalDataTemplate x:Key="categoryTemplate"
+                                  ItemsSource="{Binding Path=Items}"
+                                  ItemTemplate="{StaticResource sizeTemplate}">
+            <TextBlock Text="{Binding Path=Name}"
+                       FontWeight="Bold" />
+        </HierarchicalDataTemplate>
+    </Window.Resources>
+    
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="149*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="202*"/>
+        </Grid.RowDefinitions>
+        <Button Content="Sort" Foreground="FloralWhite" Background="CadetBlue" Grid.Row="0" Grid.Column="0" Click="Button_Click">
+
+        </Button>
+        <TreeView x:Name="FileTree" Background="Black" Foreground="White" Grid.Row="1" Grid.Column="1">
+            <TreeViewItem Header="/" Foreground="White">
+                <StackPanel Orientation="Horizontal">
+                    <TreeViewItem Header="App" Foreground="White"/>
+                    <TreeViewItem Header="Size: 50 mb" Foreground="Wheat"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TreeViewItem Header="Images" Foreground="White">
+                        <StackPanel Orientation="Horizontal">
+                            <TreeViewItem Header="Image 1" Foreground="White"/>
+                            <TreeViewItem Header="Size: 2 gb" Foreground="Wheat"/>
+                        </StackPanel>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Size: 2.3 gb" Foreground="Wheat"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TreeViewItem Header="Data" Foreground="White"/>
+                    <TreeViewItem Header="Size: 20 mb" Foreground="Wheat"/>
+                </StackPanel>
+
+                
+            </TreeViewItem>
+
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Files}">
+                    
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+    </Grid>
+</Window>
